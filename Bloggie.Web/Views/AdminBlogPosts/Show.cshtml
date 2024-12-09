@@ -1,0 +1,91 @@
+﻿@model PaginatedList<Bloggie.Web.Models.Domain.BlogPost>
+
+@{
+    ViewData["Title"] = "Show Blogs";
+}
+
+
+<div class="container mt-4">
+    <h1>@ViewData["Title"]</h1>
+    <hr />
+
+    @if (Model.Count > 0)
+    {
+            <form asp-action="Show" method="get" class="mb-4">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="searchString" placeholder="Search..." value="@ViewData["CurrentFilter"]" />
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                        <a asp-action="Show" class="btn btn-secondary">Reset</a>
+                    </div>
+                </div>
+            </form>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            <a asp-action="Show" asp-route-sortOrder="@ViewData["IdSortParm"]" class="text-dark">ID</a>
+                        </th>
+                        <th>
+                            <a asp-action="Show" asp-route-sortOrder="@ViewData["HeadingSortParm"]" class="text-dark">Heading</a>
+                        </th>
+                        <th>Tags</th>
+                        <th>
+                            <a asp-action="Show" asp-route-sortOrder="@ViewData["PublishDateSortParm"]" class="text-dark">Publish Date</a>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var blogPost in Model)
+                {
+                            <tr>
+                                <td>@blogPost.Id</td>
+                                <td>@blogPost.Heading</td>
+                                <td>
+                            @foreach (var tag in blogPost.Tags)
+                            {
+                                            <span class="badge bg-secondary">@tag.Name</span>
+                            }
+                                </td>
+                                <td>@blogPost.PublishedDate.ToShortDateString()</td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@blogPost.Id" class="btn btn-primary btn-sm">Edit</a>
+                                    <a asp-action="Preview" asp-route-id="@blogPost.Id" class="btn btn-info btn-sm">Preview</a>
+                                </td>
+                            </tr>
+                }
+                </tbody>
+            </table>
+
+            <div class="d-flex justify-content-between align-items-center">
+            @{
+                var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+            }
+                <a asp-action="Show"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@(Model.PageIndex - 1)"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="btn btn-primary @prevDisabled">
+                    Previous
+                </a>
+                <span>Page @Model.PageIndex of @Model.TotalPages</span>
+                <a asp-action="Show"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@(Model.PageIndex + 1)"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   class="btn btn-primary @nextDisabled">
+                    Next
+                </a>
+            </div>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            No blogs found.
+            <a asp-action="Show" class="btn btn-primary mt-2">Back to Show All</a>
+        </div>
+    }
+</div>

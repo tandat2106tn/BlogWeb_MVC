@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Chat";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Chat Box</div>
+                <div class="card-body">
+                    <div id="chatWindow" class="mb-3" style="height: 300px; overflow-y: scroll;">
+                        <ul id="messagesList"></ul>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="userInput" class="form-control" placeholder="User" value="@ViewBag.CurrentUser" readonly />
+                        <input type="text" id="messageText" class="form-control" placeholder="Message" /> <!-- Changed here -->
+                        <button id="sendButton" class="btn btn-primary">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+        <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
+        <script src="~/js/chat.js"></script>
+}
