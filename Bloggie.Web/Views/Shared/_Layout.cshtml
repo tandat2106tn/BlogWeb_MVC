@@ -43,6 +43,18 @@
 						</li>
 						}
 
+						@if(signInManager.IsSignedIn(User)&&User.IsInRole("User"))
+						{
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							Profile
+							</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" asp-area="" asp-controller="Profile" asp-action="Index">Profile</a></li>
+								
+							</ul>
+						</li>
+						}
 
 					</ul>
 
@@ -52,7 +64,9 @@
 							<div class="me-3 text-light">
 								@User?.Identity?.Name
 							</div>
-
+							<a class="me-3 bg-danger text-light btn" asp-area="" asp-controller="Account" asp-action="							>EditProfile</a>
+"
+							>EditAccount</a>
 							<a class="me-3 bg-danger text-light btn" asp-area="" asp-controller="Account" asp-action="Logout"
 							>Logout</a>
 

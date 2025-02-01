@@ -105,30 +105,8 @@ namespace Bloggie.Web.Controllers
 			return View(blogPost);
 		}
 
-		[HttpGet]
-		[ActionName("Show")]
-
-		public async Task<IActionResult> Show(string sortOrder, string currentFilter, string searchString, int? pageNumber, int pageSize = 4)
-		{
-			ViewData["CurrentSort"] = sortOrder;
-			ViewData["IdSortParm"] = sortOrder == "id_desc" ? "id" : "id_desc";
-			ViewData["HeadingSortParm"] = sortOrder == "heading" ? "heading_desc" : "heading";
-			ViewData["PublishDateSortParm"] = sortOrder == "publish_date" ? "publish_date_desc" : "publish_date";
-
-			if (searchString != null)
-			{
-				pageNumber = 1;
-			}
-			else
-			{
-				searchString = currentFilter;
-			}
-
-			ViewData["CurrentFilter"] = searchString;
-
-			var blogPosts = await blogPostRepository.GetAllAsync(sortOrder, currentFilter, searchString, pageNumber, pageSize);
-			return View(blogPosts);
-		}
+		
+		
 
 		[HttpGet]
 		public async Task<IActionResult> Edit(Guid id)

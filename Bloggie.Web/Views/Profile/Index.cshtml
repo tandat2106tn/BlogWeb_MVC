@@ -1,0 +1,46 @@
+@model Bloggie.Web.Models.ViewModels.ProfileViewModel
+
+<div class="container mt-4">
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Success"]
+        </div>
+    }
+
+    <div class="card">
+        <div class="card-header">
+            <h3>Hồ sơ của bạn</h3>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">
+                    氏名：
+                </dt>
+                <dd class="col-sm-9">@Model.FullName</dd>
+
+                <dt class="col-sm-3">生年月日：</dt>
+                <dd class="col-sm-9">@Model.DateOfBirth.ToString("dd/MM/yyyy")</dd>
+
+                <dt class="col-sm-3">住所：</dt>
+                <dd class="col-sm-9">@Model.Address</dd>
+
+                <dt class="col-sm-3">電話番号：</dt>
+                <dd class="col-sm-9">@Model.PhoneNumber</dd>
+
+                <dt class="col-sm-3">学歴：</dt>
+                <dd class="col-sm-9">@Model.Education</dd>
+
+                <dt class="col-sm-3">職歴：</dt>
+                <dd class="col-sm-9">@Model.WorkExperience</dd>
+
+                <dt class="col-sm-3">資格：</dt>
+                <dd class="col-sm-9">@Model.Skills</dd>
+            </dl>
+        </div>
+        <div class="card-footer">
+            <a asp-action="Edit" class="btn btn-primary">Chỉnh sửa</a>
+            <a asp-action="Preview" class="btn btn-secondary" target="_blank">Xem CV</a>
+        </div>
+    </div>
+</div>

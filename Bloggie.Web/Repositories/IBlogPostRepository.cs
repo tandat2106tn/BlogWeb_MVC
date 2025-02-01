@@ -14,7 +14,8 @@ namespace Bloggie.Web.Repositories
         Task<BlogPost?> UpdateAsync(BlogPost blogPost);
 
         Task<BlogPost?> DeleteAsync(Guid id);
+        Task<(IEnumerable<BlogPost>, int totalCount)> GetAllAsync(string searchString, int pageNumber, int pageSize, string sortColumn, string sortOrder);
 
-        Task<PaginatedList<BlogPost>> GetAllAsync(string sortOrder, string currentFilter, string searchString, int? pageNumber, int pageSize);
+        
     }
 }

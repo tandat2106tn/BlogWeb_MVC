@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Bloggie.Web.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,7 +22,7 @@ namespace Bloggie.Web.Migrations
                     ShortDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FeaturedImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UrlHandle = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PublicesDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PublishedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Author = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Visible = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -42,6 +42,26 @@ namespace Bloggie.Web.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tags", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserProfiles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Education = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    WorkExperience = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    Skills = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserProfiles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -72,6 +92,12 @@ namespace Bloggie.Web.Migrations
                 name: "IX_BlogPostTag_TagsId",
                 table: "BlogPostTag",
                 column: "TagsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserProfiles_UserId",
+                table: "UserProfiles",
+                column: "UserId",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -79,6 +105,9 @@ namespace Bloggie.Web.Migrations
         {
             migrationBuilder.DropTable(
                 name: "BlogPostTag");
+
+            migrationBuilder.DropTable(
+                name: "UserProfiles");
 
             migrationBuilder.DropTable(
                 name: "BlogPosts");
